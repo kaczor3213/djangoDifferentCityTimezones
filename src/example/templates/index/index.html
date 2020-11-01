@@ -1,0 +1,87 @@
+{% extends 'global/global.html' %}
+{% load static %}
+{% block main %}
+<div class="container-fluid mx-0 px-0">
+  <div class="row w-100 mx-0 text-center text-light" style="height: 100vh">
+    <div class="d-flex align-items-center justify-content-center col-4 bg-danger">
+        <div>
+        <p class="display-3">New York</p>
+        <hr class="mx-3">
+        <p id="new_york" class="h3"></p>
+        </div>
+    </div>
+    <div class="d-flex align-items-center justify-content-center col-4 bg-success">
+        <div>
+        <p class="display-3">Lublin</p>
+        <hr class="mx-3">
+        <p id="lublin" class="h3"></p>
+        </div>
+    </div>
+    <div class="d-flex align-items-center justify-content-center col-4 bg-warning">
+        <div>
+        <p class="display-3">Sydney</p>
+        <hr class="mx-3">
+        <p id="sydney" class="h3"></p>
+        </div>
+    </div>
+  </div>
+</div>
+{% autoescape off %}
+<script type="text/javascript">
+var new_york_date;
+var lublin_date = new Date();
+var sydney_date = new Date();
+
+(function(){
+    var new_york_str = "{{ new_york }}";
+    var lublin_str = "{{ lublin }}";
+    var sydney_str = "{{ sydney }}";
+    var ny = new_york_str.split(',')
+    new_york_date = new Date(
+        parseInt(ny[0]),
+        parseInt(ny[1]-1),
+        parseInt(ny[2]),
+        parseInt(ny[3]),
+        parseInt(ny[4]),
+        parseInt(ny[5]),
+    )
+    var l = lublin_str.split(',')
+    lublin_date = new Date(
+        parseInt(l[0]),
+        parseInt(l[1]-1),
+        parseInt(l[2]),
+        parseInt(l[3]),
+        parseInt(l[4]),
+        parseInt(l[5]),
+    )
+    var s = sydney_str.split(',')
+    sydney_date = new Date(
+        parseInt(s[0]),
+        parseInt(s[1]-1),
+        parseInt(s[2]),
+        parseInt(s[3]),
+        parseInt(s[4]),
+        parseInt(s[5]),
+    )
+    
+    document.getElementById("new_york").innerHTML = new_york_date.toUTCString().slice(0, -4);
+    document.getElementById("lublin").innerHTML = lublin_date.toUTCString().slice(0, -4);
+    document.getElementById("sydney").innerHTML = sydney_date.toUTCString().slice(0, -4);
+    
+})();
+
+function doDate()
+{
+    new_york_date.setSeconds(new_york_date.getSeconds()+1);
+    lublin_date.setSeconds(lublin_date.getSeconds()+1);
+    sydney_date.setSeconds(sydney_date.getSeconds()+1);
+
+    document.getElementById("new_york").innerHTML = new_york_date.toUTCString().slice(0, -4);
+    document.getElementById("lublin").innerHTML = lublin_date.toUTCString().slice(0, -4);
+    document.getElementById("sydney").innerHTML = sydney_date.toUTCString().slice(0, -4);
+}
+
+setInterval(doDate, 1000);
+</script>
+{% endautoescape %}
+{% endblock %}
